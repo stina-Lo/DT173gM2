@@ -58,19 +58,19 @@ function imgTask() {
 /*Task: SASS */
 
 function sassTask() {
-    return src(files.sassPath).pipe(sass().on('error', sass.logError)).pipe(concat('styles.css')).pipe(dest('pub/css'));
+    return src(files.sassPath).pipe(sass().on('error', sass.logError)).pipe(concat('mySass.css')).pipe(dest('src/css')).pipe(livereload());
 }
 
 /*Watcher function*/
 function watchTask() {
     livereload.listen();
-    watch([files.htmlPath, files.jsPath, files.cssPath, files.imgPath, files.jsPath, files.htmlPath, files.cssPath, files.imgPath, files.sassPath, files.sassPath],
-        parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sourcemapsscssTask, sassTask));
+    watch([files.htmlPath, files.jsPath, files.sassPath, files.cssPath, files.imgPath, files.jsPath, files.htmlPath, files.cssPath, files.imgPath, files.sassPath],
+        parallel(copyHTML, jsTask, sassTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sourcemapsscssTask));
 }
 
 /*make available externaly*/
 exports.default = series(
-    parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sassTask),
+    parallel(copyHTML, jsTask, sassTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask),
     watchTask
 );
 
