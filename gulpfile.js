@@ -4,15 +4,19 @@ const uglify = require("gulp-uglify-es").default;
 const csso = require('gulp-csso');
 const sourcemaps = require('gulp-sourcemaps');
 const livereload = require('gulp-livereload');
+const sass = require('gulp-sass');
+
+sass.compiler = require('node-sass');
 
 /*Search path*/
 const files = {
     htmlPath: "src/**/*.html",
     cssPath: "src/**/*.css",
     jsPath: "src/**/*.js",
-    imgPath: "src/img/*"
+    imgPath: "src/img/*",
+    sassPath: "src/**/*.scss"
 }
-
+ 
 function sourcemapsJsTask() {
     return src(files.jsPath).pipe(sourcemaps.init()).pipe(sourcemaps.write()).pipe(dest('dist'));
 }
@@ -25,6 +29,11 @@ function sourcemapsHTMLTask() {
 function sourcemapsImgTask() {
     return src(files.imgPath).pipe(sourcemaps.init()).pipe(sourcemaps.write()).pipe(dest('dist'));
 }
+
+function sourcemapsscssTask() {
+    return src(files.sassPath).pipe(sourcemaps.init()).pipe(sourcemaps.write()).pipe(dest('dist'));
+}
+
 
 /*copy to HTML-files*/
 function copyHTML() {
@@ -46,16 +55,22 @@ function cssTask() {
 function imgTask() {
     return src(files.imgPath).pipe(dest('pub/img')).pipe(livereload());
 }
+/*Task: SASS */
+
+function sassTask() {
+    return src(files.sassPath).pipe(sass().on('error', sass.logError)).pipe(concat('styles.css')).pipe(dest('pub/css'));
+}
 
 /*Watcher function*/
 function watchTask() {
     livereload.listen();
-    watch([files.htmlPath, files.jsPath, files.cssPath, files.imgPath, files.jsPath, files.htmlPath, files.cssPath, files.imgPath],
-        parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask));
+    watch([files.htmlPath, files.jsPath, files.cssPath, files.imgPath, files.jsPath, files.htmlPath, files.cssPath, files.imgPath, files.sassPath, files.sassPath],
+        parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sourcemapsscssTask, sassTask));
 }
 
 /*make available externaly*/
 exports.default = series(
-    parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask),
+    parallel(copyHTML, jsTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sassTask),
     watchTask
 );
+
