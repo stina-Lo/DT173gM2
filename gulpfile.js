@@ -14,7 +14,7 @@ const files = {
     cssPath: "src/**/*.css",
     jsPath: "src/**/*.js",
     imgPath: "src/img/*",
-    sassPath: "src/**/*.scss"
+    sassPath: "src/sass/mySass.scss"
 }
  
 function sourcemapsJsTask() {
