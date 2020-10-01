@@ -5,6 +5,7 @@ const csso = require('gulp-csso');
 const sourcemaps = require('gulp-sourcemaps');
 const livereload = require('gulp-livereload');
 const sass = require('gulp-sass');
+const babel = require('gulp-babel');
 
 sass.compiler = require('node-sass');
 
@@ -12,9 +13,13 @@ sass.compiler = require('node-sass');
 const files = {
     htmlPath: "src/**/*.html",
     cssPath: "src/**/*.css",
-    jsPath: "src/**/*.js",
+    jsPath: "src/js/*.js",
     imgPath: "src/img/*",
     sassPath: "src/sass/mySass.scss"
+}
+
+function es6Task() {
+    return src(files.jsPath).pipe(babel({presets: ['@babel/env']})).pipe(dest('src/js'))
 }
  
 function sourcemapsJsTask() {
@@ -43,7 +48,7 @@ function copyHTML() {
 
 /*concatinate and minify js files*/
 function jsTask() {
-    return src(files.jsPath).pipe(concat('main.js')).pipe(uglify()).pipe(dest('pub/js')).pipe(livereload());
+    return src(files.jsPath).pipe(babel({presets: ['@babel/env']})).pipe(concat('main.js')).pipe(uglify()).pipe(dest('pub/js')).pipe(livereload());
 }
 
 /*Sammanslår alla css filer under css path till filen pub/css/styles.css*/
@@ -70,7 +75,7 @@ function watchTask() {
 
 /*make available externaly*/
 exports.default = series(
-    parallel(copyHTML, jsTask, sassTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask),
+    parallel(copyHTML, jsTask, sassTask, cssTask, imgTask, sourcemapsJsTask, sourcemapsHTMLTask, sourcemapsCSSTask, sourcemapsImgTask, sourcemapsscssTask),
     watchTask
 );
 

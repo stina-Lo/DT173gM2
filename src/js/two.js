@@ -1,3 +1,4 @@
-/*Asignment by Cristina Löfqvist Mid Sweden university*/ 
+"use strict";
+/*Asignment by Cristina Löfqvist Mid Sweden university*/
 
 console.log("Hello world");

@@ -1,0 +1,5 @@
+"use strict";
+/*Asignment by Cristina Löfqvist Mid Sweden university*/
+
+console.log("Hello world");
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ0d28uanMiXSwic291cmNlc0NvbnRlbnQiOlsiXCJ1c2Ugc3RyaWN0XCI7XG4vKkFzaWdubWVudCBieSBDcmlzdGluYSBMw7ZmcXZpc3QgTWlkIFN3ZWRlbiB1bml2ZXJzaXR5Ki9cblxuY29uc29sZS5sb2coXCJIZWxsbyB3b3JsZFwiKTsiXSwiZmlsZSI6InR3by5qcyJ9
